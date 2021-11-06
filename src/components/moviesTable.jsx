@@ -1,6 +1,6 @@
 import React from "react";
+import Table from "./common/table";
 import Like from "./common/like";
-import TableHeader from "./common/tableHeader";
 
 class MoviesTable extends React.Component {
   columns = [
@@ -8,42 +8,39 @@ class MoviesTable extends React.Component {
     { path: "genre.name", label: "Genre" },
     { path: "numberInStock", label: "Stock" },
     { path: "dailyRentalRate", label: "Rate" },
-    { key: "like" },
-    { key: "delete" },
+    {
+      key: "like",
+      content: (item) => (
+        <Like
+          liked={item.liked}
+          className="clickable"
+          onLike={() => this.props.onLike(item)}
+        />
+      ),
+    },
+    {
+      key: "delete",
+      content: (item) => (
+        <button
+          onClick={() => this.props.onDelete(item)}
+          className="clickable btn btn-danger btn-sm"
+        >
+          Delete
+        </button>
+      ),
+    },
   ];
 
   render() {
-    const { movies, onDelete, onLike, onSort, sortColumn } = this.props;
+    const { movies, onSort, sortColumn } = this.props;
 
     return (
-      <table className="table">
-        <TableHeader
-          columns={this.columns}
-          sortColumn={sortColumn}
-          onSort={onSort}
-        />
-        <tbody>
-          {movies.map((movie) => (
-            <tr key={movie._id}>
-              <td>{movie.title}</td>
-              <td>{movie.genre.name}</td>
-              <td>{movie.numberInStock}</td>
-              <td>{movie.dailyRentalRate}</td>
-              <td>
-                <Like liked={movie.liked} onClick={() => onLike(movie)} />
-              </td>
-              <td>
-                <button
-                  onClick={() => onDelete(movie)}
-                  className="btn btn-danger btn-sm"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Table
+        data={movies}
+        onSort={onSort}
+        sortColumn={sortColumn}
+        columns={this.columns}
+      />
     );
   }
 }

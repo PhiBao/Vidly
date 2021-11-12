@@ -2,7 +2,7 @@ import React from "react";
 
 const ListGroup = ({
   items,
-  onItemSelected,
+  onItemSelect,
   textProperty,
   valueProperty,
   selectedItem,
@@ -17,7 +17,7 @@ const ListGroup = ({
               ? "clickable list-group-item active"
               : "clickable list-group-item"
           }
-          onClick={() => onItemSelected(item)}
+          onClick={() => onItemSelect(item)}
         >
           {item[textProperty]}
         </li>

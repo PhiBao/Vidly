@@ -13,7 +13,7 @@ const Select = ({ name, label, options, error, ...rest }) => {
         aria-label="select form"
         className="form-control"
       >
-        <option value="" selected>
+        <option value="" disabled>
           Select a genre
         </option>
         {options.map((option) => (
